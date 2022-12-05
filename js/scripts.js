@@ -18,3 +18,11 @@ pokemonList.push(
     { name: 'Psyduck', height: 2.07, types: ['Water'] }
 );
 
+for (i = 0; i < pokemonList.length; i++) {
+    document.write('A wild ' + pokemonList[i].name + ' has appeared! It is ' + pokemonList[i].height + ' feet tall!');
+    if (pokemonList[i].height > 2) {
+        document.write(' Wow, that\'s big!<br>');
+    } else {
+        document.write('<br>');
+    }
+}
