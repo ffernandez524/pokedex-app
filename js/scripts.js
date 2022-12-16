@@ -17,6 +17,30 @@ let pokemonRepository = (function () {
     function getAll () {
         return pokemonList;
     }
+    
+    function addListItem(pokemon) {
+        let documentList = document.querySelector('.pokemon-list');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+        
+        button.classList.add('pokemon-button');
+        button.innerText = pokemon.name;
+        buttonClick(button, pokemon);        
+
+        listItem.appendChild(button);
+        documentList.appendChild(listItem);
+    }
+
+    function buttonClick(button, pokemon) {
+        button.addEventListener('click', function(event) {
+            showDetails(pokemon);
+        });
+    }
+
+    function showDetails(pokemon) {
+        console.log(pokemon);
+    }
+    
     //Add Pokemon Objects to Array
     function add (item) {
         //Make sure item is an object
@@ -61,7 +85,9 @@ let pokemonRepository = (function () {
 
     return {
         getAll: getAll,
-        add: add
+        addListItem: addListItem,
+        add: add,
+        showDetails: showDetails
     }
 })();
 
@@ -73,11 +99,5 @@ pokemonRepository.add( { name: 'Snorlax', height: 6.11, types: ['Normal'] } );
 
 //Write each pokemon in the repository
 pokemonRepository.getAll().forEach(function(mon) {
-    document.write('A wild ' + mon.name + ' has appeared! It is ' + mon.height + ' feet tall!');
-
-    if (mon.height > 3) {
-        document.write(' Wow, that\'s big!<br>');
-    } else {
-        document.write('<br>');
-    }
+    pokemonRepository.addListItem(mon); 
 });

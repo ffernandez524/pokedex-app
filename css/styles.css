@@ -1,0 +1,62 @@
+/*
+Colors used
+Primary Color (Light Green): #c1ffbd;
+Secondary Color (Brown): #6c4c33;
+Link-Color (Dark Blue): #003775;
+Text-Color (Black): #000;
+*/
+
+:root {
+    --background-color-primary: #c1ffbd;
+    --background-color-secondary: #6c4c33;
+    --background-color-grid: lightgray;
+    --link-color-primary: #003775;
+    --link-color-active: #73360D;
+    --link-color-visited: #6A1C0E;
+    --button-color-primary: #800000;
+    --button-color-secondary: #e0b354;
+    --text-color-dark: #000;
+    --text-color-light: #fff;
+    --border-color: #000;
+    --sun-primary-color: #edc655;
+    --sun-secondary-color: #fcffad;
+    --sun-tertiary-color: #f76414;
+    --max-width-primary: 700px;
+    --max-width-secondary: 500px;
+    --font-size-primary: 16px;
+    --line-height-default: 1.6;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+}
+
+li {
+    list-style-type: none;
+    padding: 5px;
+}
+
+.pokedex {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+}
+
+.pokemon-button {
+     border: none;
+     background-color: var(--button-color-primary);
+     color: var(--text-color-light);
+     text-decoration: none;
+     padding: 10px;
+     border-radius: 10px;
+     border-bottom: 2px solid var(--border-color);
+     transition: 0.5s opacity;
+}
+
+button:hover, 
+button:focus,
+.button:hover,
+.button:focus {
+    /* lets the mouse appear as a hand when hovering over the button */
+    cursor: pointer;
+    /* reduces the opacity of the button to 80% */
+    opacity: 0.8;
+}
