@@ -37,6 +37,10 @@ body {
     background-color: var(--background-color-primary);
 }
 
+p {
+    margin: auto;
+}
+
 .pokemon-list {
     display: flex;
     margin: auto;
@@ -57,8 +61,17 @@ li {
     padding: 10px;
     border-radius: 10px;
     border-bottom: 2px solid var(--border-color);
-    transition: 0.5s opacity;
-    
+    transition: 0.5s opacity;    
+}
+
+.pokemon-img {
+    margin: auto;
+    height: 50%;
+    width: 50%;
+}
+
+.modal-header, .pokemon-height {
+    margin: auto;
 }
 
 button:hover, 
@@ -69,58 +82,4 @@ button:focus,
     cursor: pointer;
     /* reduces the opacity of the button to 80% */
     opacity: 0.8;
-}
-
-#modal-container {
-    display: none;
-  }
-  
-#modal-container.is-visible {
-    position: fixed;
-    padding: 20px;
-    box-sizing: border-box;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-
-    /* to show it above other content */
-    z-index: 999; 
-
-    /* to allow scrolling if the screen is not high enough*/
-    overflow: auto; 
-
-    /* this is used to center the modal */
-    display: grid;
-    text-align: center;
-}
-
-.modal {
-    margin: auto;
-    display: inline-block;
-    box-sizing: border-box;
-    background: #fff;
-    padding: 15px;
-    width: 100%;
-    max-width: 700px;
-    text-align: left;
-}
-
-/* Hides the modal when the user clicks outside, presses escape, or clicks the close button */
-.modal-close {
-    float: right;
-    -webkit-appearance: none;
-    border: 0;
-    background: none;
-    color: #777;
-    text-decoration: underline;
-}
-
-.modal h1 {
-    margin-top: 0;
-}
-
-.modal p {
-    margin-bottom: 0;
 }
