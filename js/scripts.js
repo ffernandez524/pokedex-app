@@ -2,6 +2,8 @@
 let pokemon = {
     //String
     name: '',
+    //ID of pokemon
+    id: '',
     //API Url for pokemon
     detailsUrl: ''
 };
@@ -10,8 +12,19 @@ let pokemon = {
 let pokemonRepository = (function () {
     //Array that holds Pokemon Objects
     let pokemonList = [];
+
     //Pokemon API to retrieve data from
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=100';
+    let apiUrl = '';
+    let pageOffset = getOffset();
+     
+    if (pageOffset) {
+        apiUrl = ('https://pokeapi.co/api/v2/pokemon/?limit=100&offset=' + pageOffset);
+    } else {
+        apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=100';
+    }   
+
+    console.log(pageOffset);
+    console.log(apiUrl);
 
     //Get Pokemon List Array
     function getAll () {
@@ -30,12 +43,10 @@ let pokemonRepository = (function () {
         button.attr('data-toggle', 'modal');
         button.attr('data-target', '#modal-container');
         button.addClass('pokemon-button', 'btn', 'btn-primary');
-        button.text(pokemon.name);
+        button.text(pokemon.id + '. ' + pokemon.name);
         buttonClick(button, pokemon);
-
         listItem.append(button);
         documentList.append(listItem);
-        console.log('Stuff happened in AddListItem');
     }
 
     function buttonClick(button, pokemon) {
@@ -44,7 +55,16 @@ let pokemonRepository = (function () {
         });
     }
     
-    
+    //Get page offset to load specified pokemon
+    function getOffset() {
+        let urlParams = new URLSearchParams(window.location.search);
+        let offset = urlParams.get('offset');
+        if (offset) {
+            return offset;
+        } else {
+            return null;
+        }
+    }
 
     //Loads a list of pokemon from the Online API 
     function loadList() {
@@ -52,9 +72,16 @@ let pokemonRepository = (function () {
             return response.json();
         }).then(function (json) {
             json.results.forEach(function (item) {
+                //Get Pokemon ID from detail URL
+                let splitUrl = item.url.slice(0, item.url.length - 1).split('https://pokeapi.co/api/v2/pokemon/');
+
+                console.log(splitUrl);
+                idFromUrl = splitUrl.join('');
+                console.log(idFromUrl);
                 let pokemon = {
                     name: item.name.charAt(0).toUpperCase() + item.name.slice(1),
-                    detailsUrl: item.url
+                    id: idFromUrl,
+                    detailsUrl: item.url             
                 };
                 add(pokemon);
             });
@@ -71,7 +98,7 @@ let pokemonRepository = (function () {
         }).then(function (details) {
             item.imageUrl = details.sprites.front_default;
             item.height = details.height;
-            item.types = details.types;
+            item.id = details.id;
         }).catch(function (e) {
             console.error(e);
         });
@@ -79,18 +106,20 @@ let pokemonRepository = (function () {
 
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function () {
+            //Clear modal content
+            $('.modal-title').text('');
+            $('.pokemon-img').attr('src', '');
+            $('.pokemon-height').text('');
+            
             //Modify modal header
-            let modalTitle = $('.modal-title');
-            modalTitle.text(pokemon.name);
+            $('.modal-title').text(pokemon.id + '. ' + pokemon.name);
 
             //Display image of pokemon
-            let imageElement = $('.pokemon-img');
-            imageElement.attr('src', pokemon.imageUrl);
-            imageElement.attr('alt', pokemon.name);
+            $('.pokemon-img').attr('src', pokemon.imageUrl);
+            $('.pokemon-img').attr('alt', pokemon.name);
 
             //Modify modal description
-            let modalBody = $('.pokemon-height');
-            modalBody.text(pokemon.name + ' is ' + pokemon.height + ' feet tall!\n');
+            $('.pokemon-height').text(pokemon.name + ' is ' + pokemon.height + ' feet tall!\n');
 
             /* Modify modal footer (Not used currently)
             let modalFooter = $('.modal-footer');
@@ -146,6 +175,7 @@ let pokemonRepository = (function () {
         addListItem: addListItem,
         add: add,
         showDetails: showDetails,
+        getOffset: getOffset,
         loadList: loadList,
         loadDetails: loadDetails
     }
