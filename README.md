@@ -1,5 +1,6 @@
 # Pokedex App
  https://ffernandez524.github.io/pokedex-app/
+ 
  Welcome to my Pokedex website! This website showcases the projects and skills I have learned while
  progressing through CareerFoundry's Full-Stack Web Development course!
 
